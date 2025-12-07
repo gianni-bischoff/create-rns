@@ -49,6 +49,10 @@ public abstract class MiningBlockEntity extends KineticBlockEntity {
 
     public abstract int getBaseProgress();
 
+    public float getYieldMultiplier() {
+        return 1.0f;
+    };
+
     public abstract boolean isMining();
 
     public abstract MiningLevel getMiningLevel();

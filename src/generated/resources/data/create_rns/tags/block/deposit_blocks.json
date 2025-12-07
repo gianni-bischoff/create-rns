@@ -4,6 +4,11 @@
     "create_rns:copper_deposit_block",
     "create_rns:zinc_deposit_block",
     "create_rns:gold_deposit_block",
-    "create_rns:redstone_deposit_block"
+    "create_rns:redstone_deposit_block",
+    "create_rns:coal_deposite_block",
+    "create_rns:nickel_deposit_block",
+    "create_rns:constantan_deposit_block",
+    "create_rns:lead_deposit_block",
+    "create_rns:lithium_deposit_block"
   ]
 }

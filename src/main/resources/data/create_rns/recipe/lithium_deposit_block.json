@@ -1,0 +1,5 @@
+{
+  "type": "create_rns:modern_mining",
+  "deposit_block": "create_rns:lithium_deposit_block",
+  "yield": "create_rns:impure_lithium_ore"
+}

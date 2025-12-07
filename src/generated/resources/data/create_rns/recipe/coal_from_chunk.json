@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "create_rns:coal_chunk"
+    },
+    {
+      "item": "create_rns:coal_chunk"
+    },
+    {
+      "item": "create_rns:coal_chunk"
+    },
+    {
+      "item": "create_rns:coal_chunk"
+    },
+    {
+      "item": "create_rns:coal_chunk"
+    },
+    {
+      "item": "create_rns:coal_chunk"
+    },
+    {
+      "item": "create_rns:coal_chunk"
+    },
+    {
+      "item": "create_rns:coal_chunk"
+    },
+    {
+      "item": "create_rns:coal_chunk"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:coal"
+  }
+}

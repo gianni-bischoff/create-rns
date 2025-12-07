@@ -5,7 +5,8 @@ import net.minecraft.network.chat.Component;
 
 public enum MiningLevel {
     BASIC(1, "basic"),
-    ADVANCED(2, "advanced");
+    ADVANCED(2, "advanced"),
+    MODERN(3, "modern");
 
     private final int level;
     private final String id;

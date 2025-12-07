@@ -53,6 +53,9 @@ public class RNSContent {
     public static final PartialModel MINER_MK2_DRILL = PartialModel.of(
             ResourceLocation.fromNamespaceAndPath(CreateRNS.MOD_ID, "block/miner_mk2/drill_head"));
 
+    public static final PartialModel MINER_MK3_DRILL = PartialModel.of(
+            ResourceLocation.fromNamespaceAndPath(CreateRNS.MOD_ID, "block/miner_mk3/drill_head"));
+
     // Item tooltips
     static {
         CreateRNS.REGISTRATE.setTooltipModifierFactory(item ->
@@ -114,10 +117,23 @@ public class RNSContent {
             "impure_gold_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
     public static final ItemEntry<Item> IMPURE_REDSTONE_DUST = CreateRNS.REGISTRATE.item(
             "impure_redstone_dust", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
+    public static final ItemEntry<Item> IMPURE_COAL_ORE = CreateRNS.REGISTRATE.item(
+            "impure_coal_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
+    public static final ItemEntry<Item> IMPURE_NICKEL_ORE = CreateRNS.REGISTRATE.item(
+            "impure_nickel_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
+    public static final ItemEntry<Item> IMPURE_CONSTANTAN_ORE = CreateRNS.REGISTRATE.item(
+            "impure_constantan_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
+    public static final ItemEntry<Item> IMPURE_LEAD_ORE = CreateRNS.REGISTRATE.item(
+            "impure_lead_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
+    public static final ItemEntry<Item> IMPURE_LITHIUM_ORE = CreateRNS.REGISTRATE.item(
+            "impure_lithium_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
 
     // Yoinked from tech reborn
     public static final ItemEntry<Item> REDSTONE_SMALL_DUST = CreateRNS.REGISTRATE.item(
                     "redstone_small_dust", Item::new).register();
+
+    public static final ItemEntry<Item> COAL_CHUNK = CreateRNS.REGISTRATE.item(
+            "coal_chunk", Item::new).register();
 
     // Blocks
     public static final BlockEntry<MinerMk1Block> MINER_MK1_BLOCK = CreateRNS.REGISTRATE.block("miner_mk1",
@@ -156,6 +172,24 @@ public class RNSContent {
             .build()
             .register();
 
+    public static final BlockEntry<MinerMk3Block> MINER_MK3_BLOCK = CreateRNS.REGISTRATE.block("miner_mk3",
+                    MinerMk3Block::new)
+            .transform(minerBlockCommon())
+            .onRegister((b) -> BlockStressValues.IMPACTS.register(b, () -> 2))
+            .item()
+            .model(AssetLookup::customItemModel)
+            .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
+                    .define('F', AllBlocks.BRASS_FUNNEL)
+                    .define('R', RESONANT_MECHANISM)
+                    .define('M', MINER_MK1_BLOCK)
+                    .pattern("F")
+                    .pattern("R")
+                    .pattern("M")
+                    .unlockedBy("has_item", RegistrateRecipeProvider.has(AllItems.PRECISION_MECHANISM))
+                    .save(p))
+            .build()
+            .register();
+
     public static final BlockEntry<DepositBlock> IRON_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
                     "iron_deposit_block", DepositBlock::new)
             .transform(deposit(MapColor.RAW_IRON)).register();
@@ -171,6 +205,22 @@ public class RNSContent {
     public static final BlockEntry<DepositBlock> REDSTONE_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
                     "redstone_deposit_block", DepositBlock::new)
             .transform(deposit(MapColor.FIRE)).register();
+    public static final BlockEntry<DepositBlock> COAL_DEPOSITE_BLOCK = CreateRNS.REGISTRATE.block(
+                    "coal_deposite_block", DepositBlock::new)
+            .transform(deposit(MapColor.COLOR_BLACK)).register();
+
+    public static final BlockEntry<DepositBlock> NICKEL_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
+                    "nickel_deposit_block", DepositBlock::new)
+            .transform(deposit(MapColor.SNOW)).register();
+    public static final BlockEntry<DepositBlock> CONSTANTAN_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
+                    "constantan_deposit_block", DepositBlock::new)
+            .transform(deposit(MapColor.GOLD)).register();
+    public static final BlockEntry<DepositBlock> LEAD_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
+                    "lead_deposit_block", DepositBlock::new)
+            .transform(deposit(MapColor.COLOR_GRAY)).register();
+    public static final BlockEntry<DepositBlock> LITHIUM_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
+                    "lithium_deposit_block", DepositBlock::new)
+            .transform(deposit(MapColor.COLOR_GREEN)).register();
 
     // Block entities
     public static final BlockEntityEntry<MinerMk1BlockEntity> MINER_MK1_BE = CreateRNS.REGISTRATE.blockEntity("miner_mk1",
@@ -187,6 +237,14 @@ public class RNSContent {
             .visual(() -> MinerMk2Visual::new)
             .validBlock(MINER_MK2_BLOCK)
             .renderer(() -> MinerMk2Renderer::new)
+            .register();
+
+    public static final BlockEntityEntry<MinerMk3BlockEntity> MINER_MK3_BE = CreateRNS.REGISTRATE.blockEntity("miner_mk3",
+                    (BlockEntityType<MinerMk3BlockEntity> t, BlockPos p, BlockState s) ->
+                            new MinerMk3BlockEntity(t, p, s))
+            .visual(() -> MinerMk3Visual::new)
+            .validBlock(MINER_MK3_BLOCK)
+            .renderer(() -> MinerMk3Renderer::new)
             .register();
 
     public static void register(IEventBus modBus) {

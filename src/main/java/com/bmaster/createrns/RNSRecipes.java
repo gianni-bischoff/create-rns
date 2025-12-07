@@ -24,6 +24,10 @@ public class RNSRecipes {
                     .requires(RNSContent.REDSTONE_SMALL_DUST.get(), 9)
                     .unlockedBy("has_item", RegistrateRecipeProvider.has(RNSContent.REDSTONE_SMALL_DUST))
                     .save(prov, ResourceLocation.fromNamespaceAndPath(CreateRNS.MOD_ID, "redstone_from_small_dust"));
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.COAL)
+                    .requires(RNSContent.COAL_CHUNK.get(), 9)
+                    .unlockedBy("has_item", RegistrateRecipeProvider.has(RNSContent.COAL_CHUNK))
+                    .save(prov, ResourceLocation.fromNamespaceAndPath(CreateRNS.MOD_ID, "coal_from_chunk"));
         });
     }
 
@@ -33,6 +37,7 @@ public class RNSRecipes {
         GeneratedRecipe IMPURE_ZINC_ORE = fromImpure("impure_zinc_ore", RNSContent.IMPURE_ZINC_ORE, AllItems.ZINC_NUGGET);
         GeneratedRecipe IMPURE_GOLD_ORE = fromImpure("impure_gold_ore", RNSContent.IMPURE_GOLD_ORE, Items.GOLD_NUGGET);
         GeneratedRecipe IMPURE_REDSTONE_DUST = fromImpure("impure_redstone_dust", RNSContent.IMPURE_REDSTONE_DUST, RNSContent.REDSTONE_SMALL_DUST);
+        GeneratedRecipe IMPURE_COAL_ORE = fromImpure("impure_coal_ore", RNSContent.IMPURE_COAL_ORE, RNSContent.COAL_CHUNK);
 
         public Washing(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
             super(output, provider, CreateRNS.MOD_ID);

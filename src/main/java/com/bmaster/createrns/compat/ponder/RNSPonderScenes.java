@@ -148,7 +148,17 @@ public class RNSPonderScenes {
         scene.idle(20);
         scene.overlay().showText(70)
                 .attachKeyFrame()
-                .text("Miner Mk.2 can mine all types of deposits in a 3x3x5 area")
+                .text("Miner Mk.2 can mine most types of deposits in a 3x3x5 area")
+                .pointAt(miner1.getCenter())
+                .placeNearTarget();
+
+        scene.idle(10);
+        scene.world().replaceBlocks(miner1, RNSContent.MINER_MK3_BLOCK.get().defaultBlockState(), true);
+        scene.world().setKineticSpeed(miner1, -100);
+        scene.idle(20);
+        scene.overlay().showText(70)
+                .attachKeyFrame()
+                .text("Miner Mk.3 can mine all types of deposits in a 3x3x8 area")
                 .pointAt(miner1.getCenter())
                 .placeNearTarget();
     }
