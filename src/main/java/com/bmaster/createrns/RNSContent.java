@@ -53,9 +53,6 @@ public class RNSContent {
     public static final PartialModel MINER_MK2_DRILL = PartialModel.of(
             ResourceLocation.fromNamespaceAndPath(CreateRNS.MOD_ID, "block/miner_mk2/drill_head"));
 
-    public static final PartialModel MINER_MK3_DRILL = PartialModel.of(
-            ResourceLocation.fromNamespaceAndPath(CreateRNS.MOD_ID, "block/miner_mk3/drill_head"));
-
     // Item tooltips
     static {
         CreateRNS.REGISTRATE.setTooltipModifierFactory(item ->
@@ -121,8 +118,6 @@ public class RNSContent {
             "impure_coal_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
     public static final ItemEntry<Item> IMPURE_NICKEL_ORE = CreateRNS.REGISTRATE.item(
             "impure_nickel_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
-    public static final ItemEntry<Item> IMPURE_CONSTANTAN_ORE = CreateRNS.REGISTRATE.item(
-            "impure_constantan_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
     public static final ItemEntry<Item> IMPURE_LEAD_ORE = CreateRNS.REGISTRATE.item(
             "impure_lead_ore", Item::new).tag(RNSTags.Item.IMPURE_ORES).register();
     public static final ItemEntry<Item> IMPURE_LITHIUM_ORE = CreateRNS.REGISTRATE.item(
@@ -172,24 +167,6 @@ public class RNSContent {
             .build()
             .register();
 
-    public static final BlockEntry<MinerMk3Block> MINER_MK3_BLOCK = CreateRNS.REGISTRATE.block("miner_mk3",
-                    MinerMk3Block::new)
-            .transform(minerBlockCommon())
-            .onRegister((b) -> BlockStressValues.IMPACTS.register(b, () -> 2))
-            .item()
-            .model(AssetLookup::customItemModel)
-            .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
-                    .define('F', AllBlocks.BRASS_FUNNEL)
-                    .define('R', RESONANT_MECHANISM)
-                    .define('M', MINER_MK1_BLOCK)
-                    .pattern("F")
-                    .pattern("R")
-                    .pattern("M")
-                    .unlockedBy("has_item", RegistrateRecipeProvider.has(AllItems.PRECISION_MECHANISM))
-                    .save(p))
-            .build()
-            .register();
-
     public static final BlockEntry<DepositBlock> IRON_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
                     "iron_deposit_block", DepositBlock::new)
             .transform(deposit(MapColor.RAW_IRON)).register();
@@ -204,7 +181,7 @@ public class RNSContent {
             .transform(deposit(MapColor.GOLD)).register();
     public static final BlockEntry<DepositBlock> REDSTONE_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
                     "redstone_deposit_block", DepositBlock::new)
-            .transform(deposit(MapColor.FIRE)).register();
+            .transform(deposit(MapColor.FIRE, 20.f)).register();
     public static final BlockEntry<DepositBlock> COAL_DEPOSITE_BLOCK = CreateRNS.REGISTRATE.block(
                     "coal_deposite_block", DepositBlock::new)
             .transform(deposit(MapColor.COLOR_BLACK)).register();
@@ -236,24 +213,20 @@ public class RNSContent {
             .renderer(() -> MinerMk2Renderer::new)
             .register();
 
-    public static final BlockEntityEntry<MinerMk3BlockEntity> MINER_MK3_BE = CreateRNS.REGISTRATE.blockEntity("miner_mk3",
-                    (BlockEntityType<MinerMk3BlockEntity> t, BlockPos p, BlockState s) ->
-                            new MinerMk3BlockEntity(t, p, s))
-            .visual(() -> MinerMk3Visual::new)
-            .validBlock(MINER_MK3_BLOCK)
-            .renderer(() -> MinerMk3Renderer::new)
-            .register();
-
     public static void register(IEventBus modBus) {
         ATTACHMENT_TYPES.register(modBus);
     }
 
     public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, BlockBuilder<T, P>> deposit(MapColor mapColor) {
+        return deposit(mapColor, 50.0F);
+    }
+
+    public static <T extends Block, P> NonNullFunction<BlockBuilder<T, P>, BlockBuilder<T, P>> deposit(MapColor mapColor, float destroyTime) {
         return b -> b
                 .initialProperties(() -> Blocks.RAW_IRON_BLOCK)
                 .properties(p -> p
                         .mapColor(mapColor)
-                        .strength(50.0F, 1200f)
+                        .strength(destroyTime, 1200f)
                         .pushReaction(PushReaction.BLOCK)
                         .noLootTable())
                 .transform(pickaxeOnly())
