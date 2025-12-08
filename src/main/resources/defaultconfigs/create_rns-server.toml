@@ -1,2 +1,26 @@
-minerMk1Speed = 36.0
-minerMk2Speed = 36.0
+# How many mining operations a miner mk1 can complete in one hour
+# at 256 RPM, with one deposit block claimed, and no deposit multipliers.
+# Valid range: 0.1 to 10000.0 (default: 45.0)
+# Default: 45.0
+# Range: 0.1 ~ 10000.0
+minerMk1Speed = 45.0
+# How many mining operations a miner mk2 can complete in one hour
+# at 256 RPM, with one deposit block claimed, and no deposit multipliers.
+# Valid range: 0.1 to 10000.0 (default: 90.0)
+# Default: 90.0
+# Range: 0.1 ~ 10000.0
+minerMk2Speed = 90.0
+# Yield multiplier for the miner mk1.
+# This multiplies with the deposit's yield multiplier.
+# Example: 1.0 = normal yield, 2.0 = double yield, 0.5 = half yield
+# Valid range: 0.01 to 100.0 (default: 1.0)
+# Default: 1.0
+# Range: 0.01 ~ 100.0
+minerMk1YieldMultiplier = 1.0
+# Yield multiplier for the miner mk2.
+# This multiplies with the deposit's yield multiplier.
+# Example: 1.0 = normal yield, 2.0 = double yield, 0.5 = half yield
+# Valid range: 0.01 to 100.0 (default: 1.2)
+# Default: 1.2
+# Range: 0.01 ~ 100.0
+minerMk2YieldMultiplier = 1.0

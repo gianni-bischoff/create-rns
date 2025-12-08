@@ -2,5 +2,5 @@
   "type": "create_rns:basic_mining",
   "deposit_block": "create_rns:coal_deposite_block",
   "yield": "create_rns:impure_coal_ore",
-  "yield_multiplier": 2.0
+  "yield_multiplier": 1.4
 }

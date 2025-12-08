@@ -2,5 +2,4 @@
   "type": "create_rns:advanced_mining",
   "deposit_block": "create_rns:lithium_deposit_block",
   "yield": "create_rns:impure_lithium_ore",
-  "yield_multiplier": 1.5
 }
