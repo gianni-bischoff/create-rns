@@ -79,7 +79,6 @@ public class DynamicDatapack {
 
         deposits.add(new Deposit("coal", RNSContent.COAL_DEPOSITE_BLOCK.get(), bulkNBTPool, 8, 10));
         deposits.add(new Deposit("nickel", RNSContent.NICKEL_DEPOSIT_BLOCK.get(), preciousNBTPool, 8, 8));
-        deposits.add(new Deposit("constantan", RNSContent.CONSTANTAN_DEPOSIT_BLOCK.get(), preciousNBTPool, 12, 2));
         deposits.add(new Deposit("lead", RNSContent.LEAD_DEPOSIT_BLOCK.get(), bulkNBTPool, 8, 3));
         deposits.add(new Deposit("lithium", RNSContent.LITHIUM_DEPOSIT_BLOCK.get(), preciousNBTPool, 10, 1));
     }

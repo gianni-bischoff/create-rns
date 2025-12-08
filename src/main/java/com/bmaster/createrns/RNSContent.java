@@ -212,9 +212,6 @@ public class RNSContent {
     public static final BlockEntry<DepositBlock> NICKEL_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
                     "nickel_deposit_block", DepositBlock::new)
             .transform(deposit(MapColor.SNOW)).register();
-    public static final BlockEntry<DepositBlock> CONSTANTAN_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
-                    "constantan_deposit_block", DepositBlock::new)
-            .transform(deposit(MapColor.GOLD)).register();
     public static final BlockEntry<DepositBlock> LEAD_DEPOSIT_BLOCK = CreateRNS.REGISTRATE.block(
                     "lead_deposit_block", DepositBlock::new)
             .transform(deposit(MapColor.COLOR_GRAY)).register();
