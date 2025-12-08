@@ -13,10 +13,20 @@ import org.jetbrains.annotations.Nullable;
 import java.util.stream.Collectors;
 
 public class MiningRecipeLookup {
-    private static Object2ObjectOpenHashMap<Block, Item> depBlockToYieldBasic;
-    private static Object2ObjectOpenHashMap<Block, Item> depBlockToYieldAdvanced;
+    public static class YieldInfo {
+        public final Item item;
+        public final float multiplier;
 
-    public static @Nullable Item getYield(Level l, MiningLevel ml, Block depositBlock) {
+        public YieldInfo(Item item, float multiplier) {
+            this.item = item;
+            this.multiplier = multiplier;
+        }
+    }
+
+    private static Object2ObjectOpenHashMap<Block, YieldInfo> depBlockToYieldBasic;
+    private static Object2ObjectOpenHashMap<Block, YieldInfo> depBlockToYieldAdvanced;
+
+    public static @Nullable YieldInfo getYield(Level l, MiningLevel ml, Block depositBlock) {
         if (depBlockToYieldBasic == null) build(l);
         var res = depBlockToYieldBasic.get(depositBlock);
         return (res != null) ? res : depBlockToYieldAdvanced.get(depositBlock);
@@ -41,14 +51,14 @@ public class MiningRecipeLookup {
                 .map(a -> (BasicMiningRecipe) a.value())
                 .collect(Collectors.toMap(
                         BasicMiningRecipe::getDepositBlock,
-                        BasicMiningRecipe::getYield,
+                        recipe -> new YieldInfo(recipe.getYield(), recipe.getYieldMultiplier()),
                         (o, n) -> n,
                         Object2ObjectOpenHashMap::new));
         depBlockToYieldAdvanced = advancedRecipes.stream()
                 .map(a -> (AdvancedMiningRecipe) a.value())
                 .collect(Collectors.toMap(
                         AdvancedMiningRecipe::getDepositBlock,
-                        AdvancedMiningRecipe::getYield,
+                        recipe -> new YieldInfo(recipe.getYield(), recipe.getYieldMultiplier()),
                         (o, n) -> n,
                         Object2ObjectOpenHashMap::new));
     }

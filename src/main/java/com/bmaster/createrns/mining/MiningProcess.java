@@ -24,9 +24,9 @@ public class MiningProcess {
     public final MiningLevel miningLevel;
     public final Set<SingleTypeProcess> innerProcesses = new ObjectOpenHashSet<>();
 
-    public MiningProcess(Level l, MiningLevel ml, Set<BlockPos> depositBlocks, int baseProgress) {
+    public MiningProcess(Level l, MiningLevel ml, Set<BlockPos> depositBlocks, int baseProgress, float minerMultiplier) {
         miningLevel = ml;
-        setYields(l, depositBlocks, baseProgress);
+        setYields(l, depositBlocks, baseProgress, minerMultiplier);
     }
 
     public boolean isPossible() {
@@ -45,7 +45,7 @@ public class MiningProcess {
                 .collect(Collectors.toSet());
     }
 
-    public void setYields(Level l, Set<BlockPos> depositBlocks, int baseProgress) {
+    public void setYields(Level l, Set<BlockPos> depositBlocks, int baseProgress, float minerMultiplier) {
         var yieldCounts = depositBlocks.stream()
                 .map(bp -> l.getBlockState(bp).getBlock())
                 .filter(db -> db.defaultBlockState().is(RNSTags.Block.DEPOSIT_BLOCKS))
@@ -55,8 +55,13 @@ public class MiningProcess {
 
         innerProcesses.clear();
         for (var e : yieldCounts.entrySet()) {
+            var yieldInfo = e.getKey();
             var depBlockCount = e.getValue().intValue();
-            innerProcesses.add(new SingleTypeProcess(e.getKey(), baseProgress / depBlockCount));
+            // Apply both deposit multiplier and miner multiplier
+            // Lower progress requirement = faster completion = higher yield
+            float combinedMultiplier = yieldInfo.multiplier * minerMultiplier;
+            int adjustedProgress = (int) (baseProgress / (depBlockCount * combinedMultiplier));
+            innerProcesses.add(new SingleTypeProcess(yieldInfo.item, combinedMultiplier, adjustedProgress));
         }
     }
 
@@ -97,11 +102,13 @@ public class MiningProcess {
 
     public static class SingleTypeProcess {
         public final Item yield;
+        public final float yieldMultiplier;
         public int maxProgress;
         public int progress;
 
-        public SingleTypeProcess(Item yield, int maxProgress) {
+        public SingleTypeProcess(Item yield, float yieldMultiplier, int maxProgress) {
             this.yield = yield;
+            this.yieldMultiplier = yieldMultiplier;
             this.maxProgress = maxProgress;
             this.progress = 0;
         }
@@ -114,7 +121,9 @@ public class MiningProcess {
         public @Nullable ItemStack collect() {
             if (progress < maxProgress) return null;
             progress = progress - maxProgress; // Keep the extra progress
-            return new ItemStack(yield);
+            // Calculate how many items to yield based on multiplier
+            int count = (int) Math.floor(yieldMultiplier);
+            return new ItemStack(yield, count);
         }
 
         public @Nullable CompoundTag getProgressAsNBT() {
@@ -125,6 +134,7 @@ public class MiningProcess {
             stpTag.putString("Yield", yieldRL.toString());
             stpTag.putInt("Progress", progress);
             stpTag.putInt("MaxProgress", maxProgress);
+            stpTag.putFloat("YieldMultiplier", yieldMultiplier);
 
             return stpTag;
         }
@@ -133,6 +143,7 @@ public class MiningProcess {
         public void setProgressFromNBT(CompoundTag nbt) {
             this.progress = nbt.getInt("Progress");
             this.maxProgress = nbt.getInt("MaxProgress");
+            // YieldMultiplier is not loaded from NBT since it's already set from recipe
         }
     }
 }

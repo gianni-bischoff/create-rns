@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 public class BasicMiningRecipe extends MiningRecipe {
-    public BasicMiningRecipe(Block depositBlock, Item yield) {
-        super(depositBlock, yield);
+    public BasicMiningRecipe(Block depositBlock, Item yield, float yieldMultiplier) {
+        super(depositBlock, yield, yieldMultiplier);
     }
 
     @Override

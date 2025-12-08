@@ -1,5 +1,6 @@
 {
   "type": "create_rns:basic_mining",
   "deposit_block": "create_rns:iron_deposit_block",
-  "yield": "create_rns:impure_iron_ore"
+  "yield": "create_rns:impure_iron_ore",
+  "yield_multiplier": 1.5
 }

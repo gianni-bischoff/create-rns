@@ -45,4 +45,9 @@ public class MinerMk1BlockEntity extends MinerBlockEntity {
     public int getBaseProgress() {
         return ServerConfig.minerMk1BaseProgress;
     }
+
+    @Override
+    public float getYieldMultiplier() {
+        return ServerConfig.minerMk1YieldMultiplier;
+    }
 }

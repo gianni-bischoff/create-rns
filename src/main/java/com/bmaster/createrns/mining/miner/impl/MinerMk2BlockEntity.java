@@ -47,5 +47,7 @@ public class MinerMk2BlockEntity extends MinerBlockEntity {
     }
 
     @Override
-    public float getYieldMultiplier() { return 2f; }
+    public float getYieldMultiplier() {
+        return ServerConfig.minerMk2YieldMultiplier;
+    }
 }

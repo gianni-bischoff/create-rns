@@ -90,7 +90,7 @@ public abstract class MiningBlockEntity extends KineticBlockEntity {
         }
 
         // Recompute mining process yields based on claimed mining area. This also happens on process initialization.
-        if (process != null && level != null) process.setYields(level, reservedDepositBlocks, getBaseProgress());
+        if (process != null && level != null) process.setYields(level, reservedDepositBlocks, getBaseProgress(), getYieldMultiplier());
 
         setChanged();
     }
@@ -102,7 +102,7 @@ public abstract class MiningBlockEntity extends KineticBlockEntity {
 
         if (process == null) {
             // Create the mining process object
-            process = new MiningProcess(level, getMiningLevel(), reservedDepositBlocks, getBaseProgress());
+            process = new MiningProcess(level, getMiningLevel(), reservedDepositBlocks, getBaseProgress(), getYieldMultiplier());
 
             // If we got mining process data from NBT, now is the time to set it
             if (miningProgressTag != null) {
@@ -172,7 +172,7 @@ public abstract class MiningBlockEntity extends KineticBlockEntity {
 
         // Recompute mining process yields based on claimed mining area. This also happens on process initialization.
         if (process != null && level != null) {
-            process.setYields(level, reservedDepositBlocks, getBaseProgress());
+            process.setYields(level, reservedDepositBlocks, getBaseProgress(), getYieldMultiplier());
             if (miningProgressTag != null) process.setProgressFromNBT(miningProgressTag);
         }
     }
